@@ -1,38 +1,13 @@
 package main
 
 import (
-	"bytes"
-	"encoding/binary"
+	// "bytes"
+	// "encoding/binary"
 	"fmt"
 
 	// Uncomment this block to pass the first stage
 	"net"
 )
-
-func createHeader() []byte {
-
-	id := uint16(1234)
-	qRoCaAtCrD := uint8(128)
-	rAzrC := uint8(0)
-	QDCOUNT := uint16(0)
-	ANCOUNT := uint16(0)
-	NSCOUNT := uint16(0)
-	ARCOUNT := uint16(0)
-
-	messageBuffer := new(bytes.Buffer)
-	binary.Write(messageBuffer, binary.BigEndian, id)
-	binary.Write(messageBuffer, binary.BigEndian, qRoCaAtCrD)
-	binary.Write(messageBuffer, binary.BigEndian, rAzrC)
-	binary.Write(messageBuffer, binary.BigEndian, QDCOUNT)
-	binary.Write(messageBuffer, binary.BigEndian, ANCOUNT)
-	binary.Write(messageBuffer, binary.BigEndian, NSCOUNT)
-	binary.Write(messageBuffer, binary.BigEndian, ARCOUNT)
-
-	response := messageBuffer.Bytes()
-
-	return response
-
-}
 
 func main() {
 	// You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -66,13 +41,12 @@ func main() {
 		fmt.Printf("Received %d bytes from %s: %s\n", size, source, receivedData)
 
 		// Create an empty response
-		Header := createHeader()
+		header := NewDNSHeader(buf[:12])
+		header.Flags |= (1 << 15)
 
-		var dnsReply DNSMessage
+		response := header.createHeader()
 
-		dnsReply.Header = Header
-
-		_, err = udpConn.WriteToUDP(Header, source)
+		_, err = udpConn.WriteToUDP(response, source)
 		if err != nil {
 			fmt.Println("Failed to send response:", err)
 		}

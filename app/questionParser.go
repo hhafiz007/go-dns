@@ -24,7 +24,7 @@ func (q *DNSQuestion) createQuestion() []byte {
 
 		for _, char := range label {
 			hexString, _ := hex.DecodeString(fmt.Sprintf("%02X", char))
-			fmt.Println(hexString, char)
+			// fmt.Println(hexString, char)
 			binary.Write(messageBuffer, binary.BigEndian, hexString)
 		}
 

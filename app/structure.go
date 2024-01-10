@@ -60,7 +60,7 @@ func NewDNSHeader(header []byte) *DNSHeader {
 	return &DNSHeader{
 		ID:      1234,
 		Flags:   0,
-		QDCOUNT: 0,
+		QDCOUNT: 1,
 		ANCOUNT: 0,
 		NSCOUNT: 0,
 		ARCOUNT: 0,

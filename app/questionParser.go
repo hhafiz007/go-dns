@@ -3,8 +3,6 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
-	"encoding/hex"
-	"fmt"
 )
 
 type DNSQuestion struct {
@@ -18,14 +16,14 @@ func (q *DNSQuestion) createQuestion() []byte {
 	messageBuffer := new(bytes.Buffer)
 
 	for _, label := range q.Name {
-		hexLength, _ := hex.DecodeString(fmt.Sprintf("%02X", len(label))) // first we need length of label and then label in hex
+		// hexLength, _ := hex.DecodeString(fmt.Sprintf("%02X", len(label))) // first we need length of label and then label in hex
 
-		binary.Write(messageBuffer, binary.BigEndian, hexLength)
+		binary.Write(messageBuffer, binary.BigEndian, len(label))
 
 		for _, char := range label {
-			hexString, _ := hex.DecodeString(fmt.Sprintf("%02X", char))
+			// hexString, _ := hex.DecodeString(fmt.Sprintf("%02X", char))
 			// fmt.Println(hexString, char)
-			binary.Write(messageBuffer, binary.BigEndian, hexString)
+			binary.Write(messageBuffer, binary.BigEndian, char)
 		}
 
 	}

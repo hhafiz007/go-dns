@@ -18,12 +18,12 @@ func (q *DNSQuestion) createQuestion() []byte {
 	for _, label := range q.Name {
 		// hexLength, _ := hex.DecodeString(fmt.Sprintf("%02X", len(label))) // first we need length of label and then label in hex
 
-		binary.Write(messageBuffer, binary.BigEndian, len(label))
+		binary.Write(messageBuffer, binary.BigEndian, uint8(len(label)))
 
 		for _, char := range label {
 			// hexString, _ := hex.DecodeString(fmt.Sprintf("%02X", char))
 			// fmt.Println(hexString, char)
-			binary.Write(messageBuffer, binary.BigEndian, char)
+			binary.Write(messageBuffer, binary.BigEndian, uint8(char))
 		}
 
 	}

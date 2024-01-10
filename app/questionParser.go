@@ -42,7 +42,7 @@ func (q *DNSQuestion) createQuestion() []byte {
 
 func NewDNSQuestion() *DNSQuestion {
 	return &DNSQuestion{
-		Name:  []string{"google", "com"},
+		Name:  []string{"codecrafters", "io"},
 		Type:  1,
 		Class: 1,
 	}

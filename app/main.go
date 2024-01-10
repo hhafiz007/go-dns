@@ -43,10 +43,20 @@ func main() {
 		// Create an empty response
 		header := NewDNSHeader(buf[:12])
 		header.Flags |= (1 << 15)
+		question := NewDNSQuestion()
+
+		qBytes := question.createQuestion()
+
+		fmt.Println(qBytes)
 
 		response := header.createHeader()
 
-		_, err = udpConn.WriteToUDP(response, source)
+		var reply []byte
+
+		reply = append(reply, response...)
+		reply = append(reply, qBytes...)
+
+		_, err = udpConn.WriteToUDP(reply, source)
 		if err != nil {
 			fmt.Println("Failed to send response:", err)
 		}

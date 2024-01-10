@@ -50,9 +50,9 @@ func (h *DNSHeader) createHeader() []byte {
 	binary.Write(messageBuffer, binary.BigEndian, NSCOUNT)
 	binary.Write(messageBuffer, binary.BigEndian, ARCOUNT)
 
-	response := messageBuffer.Bytes()
+	header := messageBuffer.Bytes()
 
-	return response
+	return header
 
 }
 

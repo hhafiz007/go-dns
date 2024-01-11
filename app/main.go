@@ -47,6 +47,9 @@ func main() {
 
 		qBytes := question.createQuestion()
 
+		answer := NewDNSAnswer()
+		aBytes := answer.createAnswer()
+
 		fmt.Println(qBytes)
 
 		response := header.createHeader()
@@ -55,6 +58,7 @@ func main() {
 
 		reply = append(reply, response...)
 		reply = append(reply, qBytes...)
+		reply = append(reply, aBytes...)
 
 		_, err = udpConn.WriteToUDP(reply, source)
 		if err != nil {

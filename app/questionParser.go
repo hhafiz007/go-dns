@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
+	"fmt"
 )
 
 type DNSQuestion struct {
@@ -44,6 +45,7 @@ func DynamicDNSQuestion(buf []byte) *DNSQuestion {
 		}
 		i++
 	}
+	fmt.Println("index is", i)
 
 	return &DNSQuestion{
 		Name:  buf[96 : i+1],

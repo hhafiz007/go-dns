@@ -85,7 +85,7 @@ func NewDNSHeader() *DNSHeader {
 func createDynamicHeader(buf []byte) *DNSHeader {
 	// buf[16] = 1
 	// fmt.Println("buffer 17", buf)
-	return &DNSHeader{
+	dnsHeader := &DNSHeader{
 		ID:      binary.BigEndian.Uint16(buf[:2]),
 		Flags:   binary.BigEndian.Uint16(buf[2:4]),
 		QDCOUNT: binary.BigEndian.Uint16(buf[4:6]),
@@ -93,6 +93,9 @@ func createDynamicHeader(buf []byte) *DNSHeader {
 		NSCOUNT: binary.BigEndian.Uint16(buf[8:10]),
 		ARCOUNT: binary.BigEndian.Uint16(buf[10:12]),
 	}
+
+	dnsHeader.QDCOUNT = 0
+	return dnsHeader
 
 }
 

@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
-	"fmt"
 )
 
 type DNSMessage struct {
@@ -18,6 +17,7 @@ func (d *DNSMessage) createMessage(buf []byte) []byte {
 
 	header := createDynamicHeader(buf)
 	headerBytes := header.createHeader()
+	headerBytes[16] = 1
 
 	d.Header = headerBytes
 
@@ -79,9 +79,11 @@ func NewDNSHeader() *DNSHeader {
 	}
 }
 
+// 1000000000000000
+
 func createDynamicHeader(buf []byte) *DNSHeader {
 	// buf[16] = 1
-	fmt.Println("buffer 17", buf[16])
+	// fmt.Println("buffer 17", buf[16])
 	return &DNSHeader{
 		ID:      binary.BigEndian.Uint16(buf[:16]),
 		Flags:   binary.BigEndian.Uint16(buf[16:32]),

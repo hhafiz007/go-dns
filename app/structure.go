@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
+	"fmt"
 )
 
 type DNSMessage struct {
@@ -110,6 +111,7 @@ func createDynamicHeader(buf []byte) *DNSHeader {
 
 		dnsHeader.Flags |= (1 << 3)
 	}
+	fmt.Println(dnsHeader.Flags)
 
 	return dnsHeader
 

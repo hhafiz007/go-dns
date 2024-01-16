@@ -105,6 +105,12 @@ func createDynamicHeader(buf []byte) *DNSHeader {
 	dnsHeader.Flags |= (1 << 15)
 	dnsHeader.ANCOUNT = 1
 
+	if ((1 & (1 << 14)) == 1) || ((1 & (1 << 13)) == 1) || ((1 & (1 << 12)) == 1) || ((1 & (1 << 11)) == 1) {
+		// Your code here
+
+		dnsHeader.Flags |= (1 << 3)
+	}
+
 	return dnsHeader
 
 }

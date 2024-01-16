@@ -82,8 +82,8 @@ func createDynamicHeader(buf []byte) *DNSHeader {
 	return &DNSHeader{
 		ID:      binary.BigEndian.Uint16(buf[:16]),
 		Flags:   binary.BigEndian.Uint16(buf[16:32]),
-		QDCOUNT: 1,
-		ANCOUNT: 1,
+		QDCOUNT: 0,
+		ANCOUNT: 0,
 		NSCOUNT: binary.BigEndian.Uint16(buf[64:80]),
 		ARCOUNT: binary.BigEndian.Uint16(buf[80:96]),
 	}

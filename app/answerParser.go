@@ -42,3 +42,23 @@ func NewDNSAnswer() *DNSAnswer {
 		Data:   []byte("\x08\x08\x08\x08"),
 	}
 }
+
+func DynamicDNSAnswer(buf []byte) *DNSAnswer {
+
+	i := 96
+
+	for {
+		if buf[i] == 0 {
+			break
+		}
+		i++
+	}
+	return &DNSAnswer{
+		Name:   buf[96 : i+1],
+		Type:   1,
+		Class:  1,
+		TTL:    60,
+		Length: 4,
+		Data:   []byte("\x08\x08\x08\x08"),
+	}
+}

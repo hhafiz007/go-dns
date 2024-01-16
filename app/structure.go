@@ -20,7 +20,7 @@ func (d *DNSMessage) createMessage(buf []byte) []byte {
 
 	// fmt.Println(header)
 	hBytes := header.createHeader()
-	question := NewDNSQuestion()
+	question := DynamicDNSQuestion(buf)
 	qBytes := question.createQuestion()
 	answer := NewDNSAnswer()
 	aBytes := answer.createAnswer()

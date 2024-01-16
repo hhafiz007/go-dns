@@ -6,7 +6,7 @@ import (
 )
 
 type DNSQuestion struct {
-	Name  []string
+	Name  []byte
 	Type  uint16
 	Class uint16
 }
@@ -15,20 +15,8 @@ func (q *DNSQuestion) createQuestion() []byte {
 
 	messageBuffer := new(bytes.Buffer)
 
-	for _, label := range q.Name {
-		// hexLength, _ := hex.DecodeString(fmt.Sprintf("%02X", len(label))) // first we need length of label and then label in hex
-
-		binary.Write(messageBuffer, binary.BigEndian, uint8(len(label)))
-
-		for _, char := range label {
-			// hexString, _ := hex.DecodeString(fmt.Sprintf("%02X", char))
-			// fmt.Println(hexString, char)
-			binary.Write(messageBuffer, binary.BigEndian, uint8(char))
-		}
-
-	}
-	binary.Write(messageBuffer, binary.BigEndian, uint8(0)) // termination by a null byte
-
+	// termination by a null byte
+	binary.Write(messageBuffer, binary.BigEndian, q.Name)
 	binary.Write(messageBuffer, binary.BigEndian, q.Type)
 	binary.Write(messageBuffer, binary.BigEndian, q.Class)
 
@@ -40,8 +28,26 @@ func (q *DNSQuestion) createQuestion() []byte {
 
 func NewDNSQuestion() *DNSQuestion {
 	return &DNSQuestion{
-		Name:  []string{"codecrafters", "io"},
+		Name:  []byte("\x0ccodecrafters\x02io\x00"),
 		Type:  1,
 		Class: 1,
+	}
+}
+
+func DynamicDNSQuestion(buf []byte) *DNSQuestion {
+
+	i := 96
+
+	for {
+		if buf[i] == 0 {
+			break
+		}
+		i++
+	}
+
+	return &DNSQuestion{
+		Name:  buf[96 : i+1],
+		Type:  binary.BigEndian.Uint16(buf[i+1 : i+3]),
+		Class: binary.BigEndian.Uint16(buf[i+3 : i+5]),
 	}
 }

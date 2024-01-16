@@ -94,7 +94,7 @@ func createDynamicHeader(buf []byte) *DNSHeader {
 		ARCOUNT: binary.BigEndian.Uint16(buf[10:12]),
 	}
 
-	dnsHeader.QDCOUNT = 0
+	dnsHeader.QDCOUNT = 1
 	return dnsHeader
 
 }

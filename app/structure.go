@@ -18,11 +18,18 @@ func (d *DNSMessage) createMessage(buf []byte) []byte {
 	header := createDynamicHeader(buf)
 	header.Flags |= (1 << 15)
 	// fmt.Println(header)
-	headerBytes := header.createHeader()
+	hBytes := header.createHeader()
+	question := NewDNSQuestion()
+	qBytes := question.createQuestion()
+	answer := NewDNSAnswer()
+	aBytes := answer.createAnswer()
+	var reply []byte
 
-	d.Header = headerBytes
+	reply = append(reply, hBytes...)
+	reply = append(reply, qBytes...)
+	reply = append(reply, aBytes...)
 
-	return d.Header
+	return reply
 
 }
 

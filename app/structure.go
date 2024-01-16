@@ -17,7 +17,7 @@ func (d *DNSMessage) createMessage(buf []byte) []byte {
 
 	header := createDynamicHeader(buf)
 	headerBytes := header.createHeader()
-	// headerBytes[16] = 1
+	headerBytes[16] = 1
 
 	d.Header = headerBytes
 

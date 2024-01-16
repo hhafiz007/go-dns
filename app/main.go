@@ -59,6 +59,8 @@ func main() {
 
 		reply := DNSMessage.createMessage(buf)
 
+		fmt.Println("This is ", reply)
+
 		// var reply []byte
 
 		// reply = append(reply, response...)

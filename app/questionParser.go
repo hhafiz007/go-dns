@@ -47,7 +47,7 @@ func DynamicDNSQuestion(buf []byte) *DNSQuestion {
 	// fmt.Println("index is", i, buf)
 
 	return &DNSQuestion{
-		Name:  buf[96 : i+1],
+		Name:  buf[12 : i+1],
 		Type:  binary.BigEndian.Uint16(buf[i+1 : i+3]),
 		Class: binary.BigEndian.Uint16(buf[i+3 : i+5]),
 	}

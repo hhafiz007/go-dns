@@ -54,7 +54,7 @@ func DynamicDNSAnswer(buf []byte) *DNSAnswer {
 		i++
 	}
 	return &DNSAnswer{
-		Name:   buf[96 : i+1],
+		Name:   buf[12 : i+1],
 		Type:   1,
 		Class:  1,
 		TTL:    60,

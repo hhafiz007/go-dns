@@ -108,7 +108,7 @@ func createDynamicHeader(buf []byte) *DNSHeader {
 	fmt.Println("buffer", dnsHeader.Flags)
 	fmt.Println("12th bit", (1 & (dnsHeader.Flags >> 11)))
 
-	if ((1 & (1 << 14)) == 1) || ((1 & (1 << 13)) == 1) || ((1 & (1 << 12)) == 1) || ((1 & (1 << 11)) == 1) {
+	if ((1 & (dnsHeader.Flags >> 14)) == 1) || ((1 & (dnsHeader.Flags >> 13)) == 1) || ((1 & (dnsHeader.Flags >> 12)) == 1) || ((1 & (dnsHeader.Flags >> 11)) == 1) {
 		// Your code here
 		fmt.Println("hi")
 

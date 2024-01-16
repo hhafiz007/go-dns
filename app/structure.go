@@ -111,7 +111,7 @@ func createDynamicHeader(buf []byte) *DNSHeader {
 
 		dnsHeader.Flags |= (1 << 3)
 	}
-	fmt.Println(dnsHeader.Flags)
+	fmt.Println("buffer", dnsHeader.Flags)
 
 	return dnsHeader
 

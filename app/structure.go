@@ -16,7 +16,7 @@ type DNSMessage struct {
 func (d *DNSMessage) createMessage(buf []byte) []byte {
 
 	header := createDynamicHeader(buf)
-	header.Flags |= (1 << 15)
+
 	// fmt.Println(header)
 	hBytes := header.createHeader()
 	question := NewDNSQuestion()
@@ -102,6 +102,9 @@ func createDynamicHeader(buf []byte) *DNSHeader {
 	}
 
 	dnsHeader.QDCOUNT = 1
+	dnsHeader.Flags |= (1 << 15)
+	dnsHeader.ANCOUNT = 1
+
 	return dnsHeader
 
 }

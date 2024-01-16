@@ -36,7 +36,7 @@ func NewDNSQuestion() *DNSQuestion {
 
 func DynamicDNSQuestion(buf []byte) *DNSQuestion {
 
-	i := 96
+	i := 12
 
 	for {
 		if buf[i] == 0 {

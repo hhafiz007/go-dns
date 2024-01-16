@@ -13,6 +13,17 @@ type DNSMessage struct {
 	Additional []byte
 }
 
+func (d *DNSMessage) createMessage(buf []byte) []byte {
+
+	header := createDynamicHeader(buf)
+	headerBytes := header.createHeader()
+
+	d.Header = headerBytes
+
+	return d.Header
+
+}
+
 type DNSHeader struct {
 	ID uint16 // 16bits -> A random ID assigned to query packets. Response packets must reply with the same ID.
 
@@ -56,7 +67,7 @@ func (h *DNSHeader) createHeader() []byte {
 
 }
 
-func NewDNSHeader(header []byte) *DNSHeader {
+func NewDNSHeader() *DNSHeader {
 	return &DNSHeader{
 		ID:      1234,
 		Flags:   0,
@@ -65,4 +76,19 @@ func NewDNSHeader(header []byte) *DNSHeader {
 		NSCOUNT: 0,
 		ARCOUNT: 0,
 	}
+}
+
+func createDynamicHeader(buf []byte) *DNSHeader {
+	return &DNSHeader{
+		ID:      binary.BigEndian.Uint16(buf[:16]),
+		Flags:   binary.BigEndian.Uint16(buf[16:32]),
+		QDCOUNT: binary.BigEndian.Uint16(buf[32:48]),
+		ANCOUNT: binary.BigEndian.Uint16(buf[48:64]),
+		NSCOUNT: binary.BigEndian.Uint16(buf[64:80]),
+		ARCOUNT: binary.BigEndian.Uint16(buf[80:96]),
+	}
+}
+
+func NewDNSMessage() *DNSMessage {
+	return &DNSMessage{}
 }

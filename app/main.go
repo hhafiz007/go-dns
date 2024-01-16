@@ -41,24 +41,29 @@ func main() {
 		fmt.Printf("Received %d bytes from %s: %s\n", size, source, receivedData)
 
 		// Create an empty response
-		header := NewDNSHeader(buf[:12])
-		header.Flags |= (1 << 15)
-		question := NewDNSQuestion()
 
-		qBytes := question.createQuestion()
+		// header := NewDNSHeader()
+		// header.Flags |= (1 << 15)
+		// question := NewDNSQuestion()
 
-		answer := NewDNSAnswer()
-		aBytes := answer.createAnswer()
+		// qBytes := question.createQuestion()
 
-		fmt.Println(qBytes)
+		// answer := NewDNSAnswer()
+		// aBytes := answer.createAnswer()
 
-		response := header.createHeader()
+		// fmt.Println(qBytes)
 
-		var reply []byte
+		// response := header.createHeader()
 
-		reply = append(reply, response...)
-		reply = append(reply, qBytes...)
-		reply = append(reply, aBytes...)
+		DNSMessage := NewDNSMessage()
+
+		reply := DNSMessage.createMessage(buf)
+
+		// var reply []byte
+
+		// reply = append(reply, response...)
+		// reply = append(reply, qBytes...)
+		// reply = append(reply, aBytes...)
 
 		_, err = udpConn.WriteToUDP(reply, source)
 		if err != nil {

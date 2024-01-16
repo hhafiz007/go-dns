@@ -16,8 +16,6 @@ type DNSMessage struct {
 func (d *DNSMessage) createMessage(buf []byte) []byte {
 
 	header := createDynamicHeader(buf)
-	header.Flags |= (1 << 15)
-
 	headerBytes := header.createHeader()
 
 	d.Header = headerBytes

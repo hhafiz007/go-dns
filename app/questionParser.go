@@ -45,7 +45,7 @@ func DynamicDNSQuestion(buf []byte) *DNSQuestion {
 		}
 		i++
 	}
-	fmt.Println("index is", i)
+	fmt.Println("index is", i, buf)
 
 	return &DNSQuestion{
 		Name:  buf[96 : i+1],

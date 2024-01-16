@@ -106,6 +106,7 @@ func createDynamicHeader(buf []byte) *DNSHeader {
 	dnsHeader.Flags |= (1 << 15)
 	dnsHeader.ANCOUNT = 1
 	fmt.Println("buffer", dnsHeader.Flags)
+	fmt.Println("12th bit", (1&(1<<12)) == 1)
 
 	if ((1 & (1 << 14)) == 1) || ((1 & (1 << 13)) == 1) || ((1 & (1 << 12)) == 1) || ((1 & (1 << 11)) == 1) {
 		// Your code here

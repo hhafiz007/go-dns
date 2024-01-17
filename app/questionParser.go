@@ -34,9 +34,27 @@ func NewDNSQuestion() *DNSQuestion {
 	}
 }
 
-func DynamicDNSQuestion(buf []byte) *DNSQuestion {
+func getQuestionsList(h *DNSHeader, buf []byte) []DNSQuestion {
 
-	i := 12
+	totalQuestions := h.QDCOUNT
+
+	var questions []DNSQuestion
+
+	start := 12
+
+	for i := 0; i < int(totalQuestions); i++ {
+
+		questions = append(questions, *DynamicDNSQuestion(buf, start))
+
+	}
+
+	return questions
+
+}
+
+func DynamicDNSQuestion(buf []byte, start int) *DNSQuestion {
+
+	i := start
 
 	for {
 		if buf[i] == 0 {
@@ -47,7 +65,7 @@ func DynamicDNSQuestion(buf []byte) *DNSQuestion {
 	// fmt.Println("index is", i, buf)
 
 	return &DNSQuestion{
-		Name:  buf[12 : i+1],
+		Name:  buf[start : i+1],
 		Type:  binary.BigEndian.Uint16(buf[i+1 : i+3]),
 		Class: binary.BigEndian.Uint16(buf[i+3 : i+5]),
 	}

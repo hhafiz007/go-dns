@@ -8,7 +8,7 @@ import (
 
 type DNSMessage struct {
 	Header     []byte
-	Question   []byte
+	Question   []DNSQuestion
 	Answer     []byte
 	Authority  []byte
 	Additional []byte

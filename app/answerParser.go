@@ -43,18 +43,10 @@ func NewDNSAnswer() *DNSAnswer {
 	}
 }
 
-func DynamicDNSAnswer(buf []byte) *DNSAnswer {
+func DynamicDNSAnswer(q *DNSQuestion) *DNSAnswer {
 
-	i := 96
-
-	for {
-		if buf[i] == 0 {
-			break
-		}
-		i++
-	}
 	return &DNSAnswer{
-		Name:   buf[12 : i+1],
+		Name:   q.Name,
 		Type:   1,
 		Class:  1,
 		TTL:    60,

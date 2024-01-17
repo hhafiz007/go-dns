@@ -104,7 +104,7 @@ func createDynamicHeader(buf []byte) *DNSHeader {
 
 	fmt.Println(dnsHeader)
 
-	dnsHeader.QDCOUNT = 1
+	// dnsHeader.QDCOUNT = 1
 	dnsHeader.Flags |= (1 << 15)
 	dnsHeader.ANCOUNT = 1
 	fmt.Println("buffer", dnsHeader.Flags)

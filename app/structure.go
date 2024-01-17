@@ -102,6 +102,8 @@ func createDynamicHeader(buf []byte) *DNSHeader {
 		ARCOUNT: binary.BigEndian.Uint16(buf[10:12]),
 	}
 
+	fmt.Println(dnsHeader)
+
 	dnsHeader.QDCOUNT = 1
 	dnsHeader.Flags |= (1 << 15)
 	dnsHeader.ANCOUNT = 1

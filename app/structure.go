@@ -32,10 +32,14 @@ func (d *DNSMessage) createMessage(buf []byte) []byte {
 		fmt.Println("qb", qb)
 		qBytes = append(qBytes, qb...)
 	}
+	var aBytes []byte
 
-	answer := DynamicDNSAnswer(&questions[0])
+	for _, question := range questions {
+		answer := DynamicDNSAnswer(&question)
 
-	aBytes := answer.createAnswer()
+		aBytes = append(aBytes, answer.createAnswer()...)
+
+	}
 
 	var reply []byte
 
@@ -119,7 +123,7 @@ func createDynamicHeader(buf []byte) *DNSHeader {
 
 	// dnsHeader.QDCOUNT = 1
 	dnsHeader.Flags |= (1 << 15)
-	dnsHeader.ANCOUNT = 1
+	// dnsHeader.ANCOUNT = 1
 	fmt.Println("buffer", dnsHeader.Flags)
 	fmt.Println("12th bit", (1 & (dnsHeader.Flags >> 11)))
 

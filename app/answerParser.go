@@ -24,7 +24,7 @@ func (a *DNSAnswer) createAnswer() []byte {
 	binary.Write(messageBuffer, binary.BigEndian, a.Class)
 	binary.Write(messageBuffer, binary.BigEndian, a.TTL)
 	binary.Write(messageBuffer, binary.BigEndian, a.Length)
-	binary.Write(messageBuffer, binary.BigEndian, uint32(a.Class))
+	binary.Write(messageBuffer, binary.BigEndian, a.Data)
 
 	answer := messageBuffer.Bytes()
 

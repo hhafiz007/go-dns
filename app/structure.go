@@ -33,9 +33,11 @@ func (d *DNSMessage) createMessage(buf []byte, address string) []byte {
 		fmt.Println("qb", qb)
 		qBytes = append(qBytes, qb...)
 	}
-	var aBytes []byte
+	// var aBytes []byte
 
 	var reply []byte
+	reply = append(reply, hBytes...)
+	reply = append(reply, qBytes...)
 
 	for _, question := range questions {
 		// answer := DynamicDNSAnswer(&question)
@@ -44,9 +46,7 @@ func (d *DNSMessage) createMessage(buf []byte, address string) []byte {
 
 	}
 
-	reply = append(reply, hBytes...)
-	reply = append(reply, qBytes...)
-	reply = append(reply, aBytes...)
+	// reply = append(reply, aBytes...)
 
 	fmt.Println(buf)
 

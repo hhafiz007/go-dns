@@ -178,7 +178,7 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 	timeoutDuration := time.Second * 100 // Adjust the timeout duration as needed
 	conn.SetReadDeadline(time.Now().Add(timeoutDuration))
 
-	buf := make([]byte, 512)
+	// buf := make([]byte, 512)
 
 	// for {
 	// 	size, _, err := conn.ReadFromUDP(buf)

@@ -169,6 +169,7 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 	fmt.Println("Welcome to forwarding server", len(tempReply))
 
 	addr, _ := net.ResolveUDPAddr("udp", address)
+	fmt.Println("Welcome to address server", address)
 	conn, _ := net.DialUDP("udp", nil, addr)
 	defer conn.Close()
 

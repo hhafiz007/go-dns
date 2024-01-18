@@ -5,7 +5,6 @@ import (
 	"encoding/binary"
 	"fmt"
 	"net"
-	"time"
 )
 
 type DNSMessage struct {
@@ -175,19 +174,16 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 	n, _ := conn.Write(tempReply)
 	fmt.Printf("Wrote %d bytes to the UDP connection.\n", n)
 
-	timeoutDuration := time.Second * 100 // Adjust the timeout duration as needed
-	conn.SetReadDeadline(time.Now().Add(timeoutDuration))
+	buf := make([]byte, 512)
 
-	// buf := make([]byte, 512)
-
-	// for {
-	// 	size, _, err := conn.ReadFromUDP(buf)
-	// 	if err != nil {
-	// 		fmt.Println("Error receiving data:", err)
-	// 		break
-	// 	}
-	// 	fmt.Println(size)
-	// }
+	for {
+		size, _, err := conn.ReadFromUDP(buf)
+		if err != nil {
+			fmt.Println("Error receiving data:", err)
+			break
+		}
+		fmt.Println(size)
+	}
 
 	h.Flags |= (1 << 15)
 	h.QDCOUNT = originalCount

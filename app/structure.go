@@ -23,7 +23,7 @@ func (d *DNSMessage) createMessage(buf []byte) []byte {
 
 	var qBytes []byte
 
-	// qBytes := question.createQuestion()
+	qBytes := question.createQuestion()
 	questions := getQuestionsList(header, buf)
 
 	for _, question := range questions {
@@ -33,15 +33,15 @@ func (d *DNSMessage) createMessage(buf []byte) []byte {
 		qBytes = append(qBytes, qb...)
 	}
 
-	// answer := DynamicDNSAnswer(&questions[0])
+	answer := DynamicDNSAnswer(&questions[0])
 
-	// aBytes := answer.createAnswer()
+	aBytes := answer.createAnswer()
 
 	var reply []byte
 
 	reply = append(reply, hBytes...)
 	reply = append(reply, qBytes...)
-	// reply = append(reply, aBytes...)
+	reply = append(reply, aBytes...)
 
 	return reply
 

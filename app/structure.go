@@ -185,6 +185,8 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 		buf := buffer[:size]
 		question, _ := DynamicDNSQuestion(buf, 12)
 		answer := DynamicDNSAnswer(question)
+		ipStart := size - 4
+		answer.Data = buf[ipStart:]
 		answerBytes := answer.createAnswer()
 
 		*reply = append(*reply, answerBytes...)

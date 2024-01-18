@@ -17,7 +17,7 @@ func main() {
 	argumentOne := os.Args[1]
 	fmt.Println("hi arg1", argumentOne)
 
-	if string(argumentOne) == "resolver" {
+	if string(argumentOne) == "--resolver" {
 		fmt.Println("hi")
 
 		os.Exit(2)

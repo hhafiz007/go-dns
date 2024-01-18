@@ -187,8 +187,9 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 		answer := DynamicDNSAnswer(question)
 		ipStart := size - 4
 		answer.Data = buf[ipStart:]
-		fmt.Println("Printing address", answer.Data, buf[ipStart:])
+
 		answerBytes := answer.createAnswer()
+		fmt.Println("Printing address", answer.Data, buf[ipStart:], answer)
 
 		*reply = append(*reply, answerBytes...)
 

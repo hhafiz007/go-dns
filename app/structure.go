@@ -153,10 +153,10 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 	// Just setting the flag as if it is a simple question
 
 	h.Flags &= (0 << 15)
-	originalCount := h.QDCOUNT
+	// originalCount := h.QDCOUNT
 
-	h.QDCOUNT = 1
-	h.ANCOUNT = 0
+	// h.QDCOUNT = 1
+	// h.ANCOUNT = 0
 
 	var tempReply []byte
 	hBytes := h.createHeader()
@@ -199,8 +199,8 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 
 	fmt.Println("reply is", reply)
 
-	h.Flags |= (1 << 15)
-	h.QDCOUNT = originalCount
-	h.ANCOUNT = originalCount
+	// h.Flags |= (1 << 15)
+	// h.QDCOUNT = originalCount
+	// h.ANCOUNT = originalCount
 
 }

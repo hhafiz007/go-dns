@@ -14,7 +14,7 @@ func main() {
 	// You can use print statements as follows for debugging, they'll be visible when running tests.
 	fmt.Println("Logs from your program will appear here!")
 
-	argumentOne := os.Args[0]
+	argumentOne := os.Args[1]
 	fmt.Println("hi arg1", argumentOne)
 
 	if string(argumentOne) == "resolver" {

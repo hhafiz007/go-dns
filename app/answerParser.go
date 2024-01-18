@@ -45,8 +45,10 @@ func NewDNSAnswer() *DNSAnswer {
 
 func DynamicDNSAnswer(q *DNSQuestion) *DNSAnswer {
 
+	ans := q.Name | (1 << 14) | (1 << 15)
+
 	return &DNSAnswer{
-		Name:   q.Name,
+		Name:   ans,
 		Type:   1,
 		Class:  1,
 		TTL:    60,

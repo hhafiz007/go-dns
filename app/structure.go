@@ -38,6 +38,7 @@ func (d *DNSMessage) createMessage(buf []byte) []byte {
 		answer := DynamicDNSAnswer(&question)
 
 		aBytes = append(aBytes, answer.createAnswer()...)
+		break
 
 	}
 

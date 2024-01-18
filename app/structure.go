@@ -123,7 +123,7 @@ func createDynamicHeader(buf []byte) *DNSHeader {
 
 	// dnsHeader.QDCOUNT = 1
 	dnsHeader.Flags |= (1 << 15)
-	// dnsHeader.ANCOUNT = 1
+	dnsHeader.ANCOUNT = 1
 	fmt.Println("buffer", dnsHeader.Flags)
 	fmt.Println("12th bit", (1 & (dnsHeader.Flags >> 11)))
 

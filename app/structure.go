@@ -151,6 +151,7 @@ func NewDNSMessage() *DNSMessage {
 func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 
 	// Just setting the flag as if it is a simple question
+	fmt.Println("Welcome to forwarding server")
 	h.Flags &= (0 << 15)
 	originalCount := h.QDCOUNT
 	h.QDCOUNT = 1

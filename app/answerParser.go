@@ -45,12 +45,8 @@ func NewDNSAnswer() *DNSAnswer {
 
 func DynamicDNSAnswer(q *DNSQuestion) *DNSAnswer {
 
-	ans := binary.BigEndian.Uint16(q.Name) | (1 << 14) | (1 << 15)
-	byteSlice := make([]byte, 2)
-	binary.BigEndian.PutUint16(byteSlice, ans)
-
 	return &DNSAnswer{
-		Name:   byteSlice,
+		Name:   q.Name,
 		Type:   1,
 		Class:  1,
 		TTL:    60,

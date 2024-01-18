@@ -171,7 +171,7 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 	conn, _ := net.DialUDP("udp", nil, addr)
 	defer conn.Close()
 
-	n, _ := conn.Write(tempReply)
+	_, _ = conn.Write(tempReply)
 	// fmt.Printf("Wrote %d bytes to the UDP connection.\n", n)
 
 	buffer := make([]byte, 512)

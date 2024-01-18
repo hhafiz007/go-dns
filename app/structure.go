@@ -183,6 +183,7 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 			break
 		}
 		fmt.Println(size)
+		break
 	}
 
 	h.Flags |= (1 << 15)

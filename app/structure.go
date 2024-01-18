@@ -180,14 +180,14 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 
 	buf := make([]byte, 512)
 
-	for {
-		size, _, err := conn.ReadFromUDP(buf)
-		if err != nil {
-			fmt.Println("Error receiving data:", err)
-			break
-		}
-		fmt.Println(size)
-	}
+	// for {
+	// 	size, _, err := conn.ReadFromUDP(buf)
+	// 	if err != nil {
+	// 		fmt.Println("Error receiving data:", err)
+	// 		break
+	// 	}
+	// 	fmt.Println(size)
+	// }
 
 	h.Flags |= (1 << 15)
 	h.QDCOUNT = originalCount

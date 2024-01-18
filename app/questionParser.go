@@ -74,7 +74,7 @@ func DynamicDNSQuestion(buf []byte, start int) (*DNSQuestion, int) {
 		fmt.Println("First two bits", firstTwoBits)
 		if firstTwoBits != 0 {
 
-			offset = uint16(buf[start]+buf[start+1]) & 0x3FFF
+			offset = uint16(buf[start]+buf[start+1]) & 0xFFFF
 			fmt.Println("Pointer offset", offset)
 			labelLength := buf[offset]
 			name = append(name, buf[offset:offset+uint16(labelLength)+1]...)

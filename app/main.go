@@ -15,6 +15,7 @@ func main() {
 	fmt.Println("Logs from your program will appear here!")
 
 	argumentOne := os.Args[0]
+	fmt.Println("hi arg1", argumentOne)
 
 	if string(argumentOne) == "resolver" {
 		fmt.Println("hi")

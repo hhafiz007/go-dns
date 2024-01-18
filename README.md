@@ -1,6 +1,6 @@
 DNS Server
 Overview
-This DNS server, designed and developed in [programming language], stands as a robust solution for DNS resolution. It meticulously implements various DNS protocol intricacies, packet formatting, and forwarding mechanisms, ensuring seamless responses to essential DNS queries.
+This DNS server, designed and developed in GoLang, stands as a robust solution for DNS resolution. It meticulously implements various DNS protocol intricacies, packet formatting, and forwarding mechanisms, ensuring seamless responses to essential DNS queries.
 
 Key Features
 DNS Protocol Implementation: The server incorporates a comprehensive implementation of the DNS protocol, adhering to RFC standards and ensuring compatibility with a wide range of DNS clients.

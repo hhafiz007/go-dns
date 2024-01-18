@@ -20,10 +20,22 @@ func (d *DNSMessage) createMessage(buf []byte) []byte {
 
 	// fmt.Println(header)
 	hBytes := header.createHeader()
-	question := DynamicDNSQuestion(buf)
-	qBytes := question.createQuestion()
-	answer := DynamicDNSAnswer(buf)
+
+	var qBytes []byte
+
+	// qBytes := question.createQuestion()
+	questions := getQuestionsList(header, buf)
+
+	for _, question := range questions {
+		qBytes = append(qBytes, question.createQuestion()...)
+	}
+
+	fmt.Println(questions)
+
+	answer := DynamicDNSAnswer(&questions[0])
+
 	aBytes := answer.createAnswer()
+
 	var reply []byte
 
 	reply = append(reply, hBytes...)

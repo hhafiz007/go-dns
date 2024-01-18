@@ -43,16 +43,16 @@ func getQuestionsList(h *DNSHeader, buf []byte) []DNSQuestion {
 	start := 12
 
 	for i := 0; i < int(totalQuestions); i++ {
-
-		questions = append(questions, *DynamicDNSQuestion(buf, start))
-
+		question, end := DynamicDNSQuestion(buf, start)
+		questions = append(questions, *question)
+		start = end
 	}
 
 	return questions
 
 }
 
-func DynamicDNSQuestion(buf []byte, start int) *DNSQuestion {
+func DynamicDNSQuestion(buf []byte, start int) (*DNSQuestion, int) {
 
 	i := start
 
@@ -62,11 +62,33 @@ func DynamicDNSQuestion(buf []byte, start int) *DNSQuestion {
 		}
 		i++
 	}
+
+	var name []byte
+
+	for buf[start] != 0 {
+		firstTwoBits := (buf[start] >> 6) & 0b11
+		offset := uint16(start)
+		if firstTwoBits != 0 {
+
+			offset = uint16(buf[start]+buf[start+1]) & 0x3FFF
+			labelLength := buf[offset]
+			name = buf[offset : offset+uint16(labelLength)+1]
+			start += 2
+
+		} else {
+			labelLength := buf[offset]
+			name = buf[offset : offset+uint16(labelLength)+1]
+			start = int(offset + uint16(labelLength) + 1)
+
+		}
+
+	}
+
 	// fmt.Println("index is", i, buf)
 
 	return &DNSQuestion{
-		Name:  buf[start : i+1],
+		Name:  name,
 		Type:  binary.BigEndian.Uint16(buf[i+1 : i+3]),
 		Class: binary.BigEndian.Uint16(buf[i+3 : i+5]),
-	}
+	}, i + 5
 }

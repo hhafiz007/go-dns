@@ -40,7 +40,7 @@ func (d *DNSMessage) createMessage(buf []byte, address string) []byte {
 	for _, question := range questions {
 		// answer := DynamicDNSAnswer(&question)
 		// aBytes = append(aBytes, answer.createAnswer()...)
-		forwardQuery(header, &question, reply, address)
+		forwardQuery(header, &question, &reply, address)
 
 	}
 
@@ -148,7 +148,7 @@ func NewDNSMessage() *DNSMessage {
 	return &DNSMessage{}
 }
 
-func forwardQuery(h *DNSHeader, q *DNSQuestion, reply []byte, address string) []byte {
+func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 
 	// Just setting the flag as if it is a simple question
 
@@ -187,7 +187,7 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply []byte, address string) []
 		answer := DynamicDNSAnswer(question)
 		answerBytes := answer.createAnswer()
 
-		reply = append(reply, answerBytes...)
+		*reply = append(*reply, answerBytes...)
 
 		fmt.Println(size)
 		break
@@ -196,7 +196,5 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply []byte, address string) []
 	h.Flags |= (1 << 15)
 	h.QDCOUNT = originalCount
 	h.ANCOUNT = originalCount
-
-	return reply
 
 }

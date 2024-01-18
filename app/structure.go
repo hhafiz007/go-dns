@@ -40,7 +40,7 @@ func (d *DNSMessage) createMessage(buf []byte, address string) []byte {
 	for _, question := range questions {
 		// answer := DynamicDNSAnswer(&question)
 		// aBytes = append(aBytes, answer.createAnswer()...)
-		forwardQuery(&header, &question, &reply, address)
+		forwardQuery(header, &question, &reply, address)
 
 	}
 

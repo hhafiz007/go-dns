@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
+	"fmt"
 )
 
 type DNSAnswer struct {
@@ -44,7 +45,7 @@ func NewDNSAnswer() *DNSAnswer {
 }
 
 func DynamicDNSAnswer(q *DNSQuestion) *DNSAnswer {
-
+	fmt.Println("ans", q)
 	return &DNSAnswer{
 		Name:   q.Name,
 		Type:   1,

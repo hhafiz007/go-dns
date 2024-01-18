@@ -7,11 +7,20 @@ import (
 
 	// Uncomment this block to pass the first stage
 	"net"
+	"os"
 )
 
 func main() {
 	// You can use print statements as follows for debugging, they'll be visible when running tests.
 	fmt.Println("Logs from your program will appear here!")
+
+	argumentOne := os.Args[0]
+
+	if string(argumentOne) == "resolver" {
+		fmt.Println("hi")
+
+		os.Exit(2)
+	}
 
 	// Uncomment this block to pass the first stage
 	//

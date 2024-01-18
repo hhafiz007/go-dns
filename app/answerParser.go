@@ -45,7 +45,7 @@ func NewDNSAnswer() *DNSAnswer {
 }
 
 func DynamicDNSAnswer(q *DNSQuestion) *DNSAnswer {
-	fmt.Println("ans", q)
+	fmt.Println("ans", q.Name)
 	return &DNSAnswer{
 		Name:   q.Name,
 		Type:   1,

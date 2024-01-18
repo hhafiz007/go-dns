@@ -167,12 +167,12 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 	tempReply = append(tempReply, qBytes...)
 
 	addr, _ := net.ResolveUDPAddr("udp", address)
-	fmt.Println("Welcome to address server", address)
+	// fmt.Println("Welcome to address server", address)
 	conn, _ := net.DialUDP("udp", nil, addr)
 	defer conn.Close()
 
 	n, _ := conn.Write(tempReply)
-	fmt.Printf("Wrote %d bytes to the UDP connection.\n", n)
+	// fmt.Printf("Wrote %d bytes to the UDP connection.\n", n)
 
 	buffer := make([]byte, 512)
 
@@ -187,6 +187,7 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 		answer := DynamicDNSAnswer(question)
 		ipStart := size - 4
 		answer.Data = buf[ipStart:]
+		fmt.Println("Printing address", answer.Data, buf[ipStart:])
 		answerBytes := answer.createAnswer()
 
 		*reply = append(*reply, answerBytes...)
@@ -195,7 +196,7 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 		break
 	}
 
-	fmt.Println(reply)
+	// fmt.Println(reply)
 
 	h.Flags |= (1 << 15)
 	h.QDCOUNT = originalCount

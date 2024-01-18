@@ -87,6 +87,8 @@ func DynamicDNSQuestion(buf []byte, start int) (*DNSQuestion, int) {
 
 	}
 
+	name = append(name, 0)
+
 	// fmt.Println("index is", i, buf)
 
 	return &DNSQuestion{

@@ -47,6 +47,8 @@ func (d *DNSMessage) createMessage(buf []byte) []byte {
 	reply = append(reply, qBytes...)
 	reply = append(reply, aBytes...)
 
+	fmt.Println(buf)
+
 	fmt.Println(reply)
 
 	return reply

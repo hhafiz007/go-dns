@@ -160,13 +160,11 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 
 	var tempReply []byte
 	hBytes := h.createHeader()
-	fmt.Println("Welcome to forwarding server 2")
+
 	tempReply = append(tempReply, hBytes...)
 	qBytes := q.createQuestion()
-	fmt.Println("Welcome to forwarding server 3")
-	tempReply = append(tempReply, qBytes...)
 
-	fmt.Println("Welcome to forwarding server", len(tempReply))
+	tempReply = append(tempReply, qBytes...)
 
 	addr, _ := net.ResolveUDPAddr("udp", address)
 	fmt.Println("Welcome to address server", address)
@@ -175,6 +173,18 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 
 	n, _ := conn.Write(tempReply)
 	fmt.Printf("Wrote %d bytes to the UDP connection.\n", n)
+
+	buf := make([]byte, 512)
+
+	for {
+		size, source, err := conn.ReadFromUDP(buf)
+		if err != nil {
+			fmt.Println("Error receiving data:", err)
+			break
+		}
+
+		fmt.Println(size, source, err)
+	}
 
 	h.Flags |= (1 << 15)
 	h.QDCOUNT = originalCount

@@ -23,7 +23,7 @@ func (d *DNSMessage) createMessage(buf []byte) []byte {
 
 	var qBytes []byte
 
-	qBytes := question.createQuestion()
+	// qBytes := question.createQuestion()
 	questions := getQuestionsList(header, buf)
 
 	for _, question := range questions {

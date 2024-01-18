@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
-	"fmt"
 )
 
 type DNSQuestion struct {
@@ -64,35 +63,35 @@ func DynamicDNSQuestion(buf []byte, start int) (*DNSQuestion, int) {
 		i++
 	}
 
-	var name []byte
-	fmt.Println("DynamicDNSQuestion start", start)
+	// var name []byte
+	// fmt.Println("DynamicDNSQuestion start", start)
 
-	for buf[start] != 0 {
-		firstTwoBits := (buf[start] >> 6) & 0b11
-		offset := uint16(start)
-		fmt.Println("DynamicDNSQuestion offset", offset)
-		if firstTwoBits != 0 {
+	// for buf[start] != 0 {
+	// 	firstTwoBits := (buf[start] >> 6) & 0b11
+	// 	offset := uint16(start)
+	// 	fmt.Println("DynamicDNSQuestion offset", offset)
+	// 	if firstTwoBits != 0 {
 
-			offset = uint16(buf[start]+buf[start+1]) & 0x3FFF
-			labelLength := buf[offset]
-			name = append(name, buf[offset:offset+uint16(labelLength)+1]...)
-			start += 2
+	// 		offset = uint16(buf[start]+buf[start+1]) & 0x3FFF
+	// 		labelLength := buf[offset]
+	// 		name = append(name, buf[offset:offset+uint16(labelLength)+1]...)
+	// 		start += 2
 
-		} else {
-			labelLength := buf[offset]
-			name = append(name, buf[offset:offset+uint16(labelLength)+1]...)
-			start = int(offset + uint16(labelLength) + 1)
+	// 	} else {
+	// 		labelLength := buf[offset]
+	// 		name = append(name, buf[offset:offset+uint16(labelLength)+1]...)
+	// 		start = int(offset + uint16(labelLength) + 1)
 
-		}
+	// 	}
 
-	}
+	// }
 
-	name = append(name, 0)
+	// name = append(name, 0)
 
 	// fmt.Println("index is", i, buf)
 
 	return &DNSQuestion{
-		Name:  name,
+		Name:  buf[start : i+1],
 		Type:  binary.BigEndian.Uint16(buf[i+1 : i+3]),
 		Class: binary.BigEndian.Uint16(buf[i+3 : i+5]),
 	}, i + 5

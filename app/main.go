@@ -67,7 +67,7 @@ func main() {
 
 		DNSMessage := NewDNSMessage()
 
-		address := string(os.Args[1])
+		address := string(os.Args[2])
 
 		reply := DNSMessage.createMessage(buf, address)
 

@@ -28,7 +28,9 @@ func (d *DNSMessage) createMessage(buf []byte) []byte {
 
 	for _, question := range questions {
 		fmt.Println("ques", question)
-		qBytes = append(qBytes, question.createQuestion()...)
+		qb := question.createQuestion()
+		fmt.Println("qb", qb)
+		qBytes = append(qBytes, qb...)
 	}
 
 	answer := DynamicDNSAnswer(&questions[0])

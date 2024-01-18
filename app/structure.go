@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"net"
+	"time"
 )
 
 type DNSMessage struct {
@@ -173,6 +174,9 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 
 	n, _ := conn.Write(tempReply)
 	fmt.Printf("Wrote %d bytes to the UDP connection.\n", n)
+
+	timeoutDuration := time.Second * 10 // Adjust the timeout duration as needed
+	conn.SetReadDeadline(time.Now().Add(timeoutDuration))
 
 	buf := make([]byte, 512)
 

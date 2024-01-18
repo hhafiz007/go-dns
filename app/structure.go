@@ -197,7 +197,7 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 		break
 	}
 
-	// fmt.Println(reply)
+	fmt.Println("reply is", reply)
 
 	h.Flags |= (1 << 15)
 	h.QDCOUNT = originalCount

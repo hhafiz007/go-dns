@@ -46,7 +46,7 @@ func NewDNSAnswer() *DNSAnswer {
 func DynamicDNSAnswer(q *DNSQuestion) *DNSAnswer {
 
 	return &DNSAnswer{
-		Name:   []byte("\x0ccodecrafters\x02io\x00"),
+		Name:   q.Name,
 		Type:   1,
 		Class:  1,
 		TTL:    60,

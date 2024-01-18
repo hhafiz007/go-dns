@@ -1,37 +1,17 @@
-[![progress-banner](https://backend.codecrafters.io/progress/dns-server/63b4bb1a-6fde-4f87-8869-5a2a9f3f4dbf)](https://app.codecrafters.io/users/codecrafters-bot?r=2qF)
+DNS Server
+Overview
+This DNS server, designed and developed in [programming language], stands as a robust solution for DNS resolution. It meticulously implements various DNS protocol intricacies, packet formatting, and forwarding mechanisms, ensuring seamless responses to essential DNS queries.
 
-This is a starting point for Go solutions to the
-["Build Your Own DNS server" Challenge](https://app.codecrafters.io/courses/dns-server/overview).
+Key Features
+DNS Protocol Implementation: The server incorporates a comprehensive implementation of the DNS protocol, adhering to RFC standards and ensuring compatibility with a wide range of DNS clients.
 
-In this challenge, you'll build a DNS server that's capable of parsing and
-creating DNS packets, responding to DNS queries, handling various record types
-and doing recursive resolve. Along the way we'll learn about the DNS protocol,
-DNS packet format, root servers, authoritative servers, forwarding servers,
-various record types (A, AAAA, CNAME, etc) and more.
+Packet Formatting: Meticulously handles DNS packet formatting, enabling the server to send and receive DNS messages in accordance with established standards.
 
-**Note**: If you're viewing this repo on GitHub, head over to
-[codecrafters.io](https://codecrafters.io) to try the challenge.
+Forwarding Servers: Implements a forwarding mechanism to efficiently resolve DNS queries by forwarding them to authoritative DNS servers. This enhances the speed and reliability of the DNS resolution process.
 
-# Passing the first stage
+A Record Types: Supports A record types, allowing the server to resolve domain names to IPv4 addresses. This is fundamental for mapping domain names to corresponding IP addresses.
 
-The entry point for your `your_server.sh` implementation is in `app/main.go`.
-Study and uncomment the relevant code, and push your changes to pass the first
-stage:
+UDP for Seamless Responses: Utilizes the User Datagram Protocol (UDP) for communication, providing seamless and lightweight responses to DNS queries. This enhances efficiency and responsiveness in resolving domain names.
 
-```sh
-git add .
-git commit -m "pass 1st stage" # any msg
-git push origin master
-```
-
-Time to move on to the next stage!
-
-# Stage 2 & beyond
-
-Note: This section is for stages 2 and beyond.
-
-1. Ensure you have `go (1.19)` installed locally
-1. Run `./your_server.sh` to run your program, which is implemented in
-   `app/main.go`.
-1. Commit your changes and run `git push origin master` to submit your solution
-   to CodeCrafters. Test output will be streamed to your terminal.
+Usage
+To deploy and utilize the DNS server, follow the provided installation instructions in the repository. Configure the server with the necessary settings and ensure proper network connectivity for DNS resolution.

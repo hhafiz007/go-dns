@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"net"
 )
 
 type DNSMessage struct {
@@ -14,7 +15,7 @@ type DNSMessage struct {
 	Additional []byte
 }
 
-func (d *DNSMessage) createMessage(buf []byte) []byte {
+func (d *DNSMessage) createMessage(buf []byte, address string) []byte {
 
 	header := createDynamicHeader(buf)
 
@@ -34,14 +35,14 @@ func (d *DNSMessage) createMessage(buf []byte) []byte {
 	}
 	var aBytes []byte
 
-	for _, question := range questions {
-		answer := DynamicDNSAnswer(&question)
+	var reply []byte
 
-		aBytes = append(aBytes, answer.createAnswer()...)
+	for _, question := range questions {
+		// answer := DynamicDNSAnswer(&question)
+		// aBytes = append(aBytes, answer.createAnswer()...)
+		forwardQuery(&header, &question, &reply, address)
 
 	}
-
-	var reply []byte
 
 	reply = append(reply, hBytes...)
 	reply = append(reply, qBytes...)
@@ -145,4 +146,30 @@ func createDynamicHeader(buf []byte) *DNSHeader {
 
 func NewDNSMessage() *DNSMessage {
 	return &DNSMessage{}
+}
+
+func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
+
+	// Just setting the flag as if it is a simple question
+	h.Flags &= (0 << 15)
+	originalCount := h.QDCOUNT
+	h.QDCOUNT = 1
+	h.ANCOUNT = 0
+
+	var tempReply []byte
+	hBytes := h.createHeader()
+	tempReply = append(tempReply, hBytes...)
+	qBytes := q.createQuestion()
+	tempReply = append(tempReply, qBytes...)
+
+	addr, _ := net.ResolveUDPAddr("udp", address)
+	conn, _ := net.DialUDP("udp", nil, addr)
+	defer conn.Close()
+	n, _ := conn.Write(tempReply)
+	fmt.Printf("Wrote %d bytes to the UDP connection.\n", n)
+
+	h.Flags |= (1 << 15)
+	h.QDCOUNT = originalCount
+	h.ANCOUNT = originalCount
+
 }

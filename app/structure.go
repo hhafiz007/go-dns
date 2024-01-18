@@ -40,7 +40,7 @@ func (d *DNSMessage) createMessage(buf []byte, address string) []byte {
 	for _, question := range questions {
 		// answer := DynamicDNSAnswer(&question)
 		// aBytes = append(aBytes, answer.createAnswer()...)
-		forwardQuery(header, &question, &reply, address)
+		forwardQuery(header, &question, reply, address)
 
 	}
 
@@ -148,7 +148,7 @@ func NewDNSMessage() *DNSMessage {
 	return &DNSMessage{}
 }
 
-func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
+func forwardQuery(h *DNSHeader, q *DNSQuestion, reply []byte, address string) []byte {
 
 	// Just setting the flag as if it is a simple question
 
@@ -174,14 +174,21 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 	n, _ := conn.Write(tempReply)
 	fmt.Printf("Wrote %d bytes to the UDP connection.\n", n)
 
-	buf := make([]byte, 512)
+	buffer := make([]byte, 512)
 
 	for {
-		size, _, err := conn.ReadFromUDP(buf)
+		size, _, err := conn.ReadFromUDP(buffer)
 		if err != nil {
 			fmt.Println("Error receiving data:", err)
 			break
 		}
+		buf := buffer[:size]
+		question, _ := DynamicDNSQuestion(buf, 12)
+		answer := DynamicDNSAnswer(question)
+		answerBytes := answer.createAnswer()
+
+		reply = append(reply, answerBytes...)
+
 		fmt.Println(size)
 		break
 	}
@@ -189,5 +196,7 @@ func forwardQuery(h *DNSHeader, q *DNSQuestion, reply *[]byte, address string) {
 	h.Flags |= (1 << 15)
 	h.QDCOUNT = originalCount
 	h.ANCOUNT = originalCount
+
+	return reply
 
 }

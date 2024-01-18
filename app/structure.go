@@ -21,31 +21,31 @@ func (d *DNSMessage) createMessage(buf []byte) []byte {
 	// fmt.Println(header)
 	hBytes := header.createHeader()
 
-	var qBytes []byte
+	// var qBytes []byte
 
-	// qBytes := question.createQuestion()
-	questions := getQuestionsList(header, buf)
+	// // qBytes := question.createQuestion()
+	// questions := getQuestionsList(header, buf)
 
-	for _, question := range questions {
-		fmt.Println("ques", question)
-		qb := question.createQuestion()
-		fmt.Println("qb", qb)
-		qBytes = append(qBytes, qb...)
-	}
-	var aBytes []byte
+	// for _, question := range questions {
+	// 	fmt.Println("ques", question)
+	// 	qb := question.createQuestion()
+	// 	fmt.Println("qb", qb)
+	// 	qBytes = append(qBytes, qb...)
+	// }
+	// var aBytes []byte
 
-	for _, question := range questions {
-		answer := DynamicDNSAnswer(&question)
+	// for _, question := range questions {
+	// 	answer := DynamicDNSAnswer(&question)
 
-		aBytes = append(aBytes, answer.createAnswer()...)
+	// 	aBytes = append(aBytes, answer.createAnswer()...)
 
-	}
+	// }
 
 	var reply []byte
 
 	reply = append(reply, hBytes...)
-	reply = append(reply, qBytes...)
-	reply = append(reply, aBytes...)
+	// reply = append(reply, qBytes...)
+	// reply = append(reply, aBytes...)
 
 	return reply
 
